@@ -1,17 +1,27 @@
 # copperhead writes a per-run transcript here. It is a local record of a run,
 # not part of the design, and it can contain the full text of a conversation.
 .copperhead/runs/
+# copperhead's response cache and the SVGs it renders for a run
+.copperhead/llm-cache/
+.copperhead/renders/
 
 # KiCad working files
 *.kicad_prl
 *-backups/
+.history/
 fp-info-cache
 *.lck
+\#auto_saved_files#
+_autosave-*
 
-# build and fabrication output, which is regenerated from the design
+# images made for people to look at, regenerated from the design
+renders/
+
+# scratch build output; a release's files live in releases/<rev>/
 build/
 fab/
 gerbers/
 
 node_modules/
+__pycache__/
 .DS_Store

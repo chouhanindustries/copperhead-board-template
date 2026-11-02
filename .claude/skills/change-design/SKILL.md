@@ -45,8 +45,24 @@ copperhead --json do "<request>" --model claude-code
 ```
 
 In a copperhead workspace the model is `claude-code`; a `compat:` model answers
-404 there. The tree must be clean; commit or set aside the person's own edits
-first rather than passing `--allow-dirty`.
+404 there. The tree must be clean, or `do` refuses to start. Look at
+`git status` first; two kinds of uncommitted file are handled differently:
+
+- **The viewer's records:** review notes in `.copperhead/review/`, review
+  options in `.copperhead/verification.yaml`, profiles and review runs under
+  `.copperhead/verification/`, and the `.gitattributes` lines that mark the
+  runs as generated. They are the project's record of its review, and the
+  note a request names is usually among them. Commit them first, on their own:
+
+  ```bash
+  git add .copperhead/review .copperhead/verification.yaml .copperhead/verification .gitattributes
+  git commit -m "review: record notes and verification"
+  ```
+
+  Never stash, move or delete them: the viewer shows them while the run works,
+  and a stash takes the note and the findings off the person's screen.
+- **The person's own edits** to anything else: ask whether to commit them or
+  set them aside. Do not pass `--allow-dirty`.
 
 ## 4. Read the outcome
 
@@ -55,7 +71,11 @@ The JSON's `outcome` is the result, not the model's narration. It also carries
 
 - **`success`:** the change passed verification and was committed. Report
   `commit`, `filesTouched` and the `summary`. A dry run also ends in `success`
-  with no commit; show the person the diff it printed.
+  with no commit; show the person the diff it printed. On a design copperhead
+  did not create (an imported board), `do` holds the change to adding no ERC
+  or DRC finding; the findings the design already had are reported as
+  pre-existing and left as they were, so say how many, and do not call the
+  design clean.
 - **`refused`:** the pipeline declined. Relay the reason from `summary`; it is
   usually a constraint or a budget the request breaks, and the person decides.
 - **`failure`:** verification could not be satisfied and the tree was rolled

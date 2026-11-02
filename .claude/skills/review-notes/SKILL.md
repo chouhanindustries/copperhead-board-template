@@ -50,7 +50,9 @@ them, or resolved with the person's agreement.
   the datasheet or the document line that settles it. Ask whether the answer
   closes it.
 - **improvement:** turn it into one `/change-design` request that cites the
-  note's id. Resolve it after that change commits, not before.
+  note's id. A note the viewer just wrote is not committed yet; `/change-design`
+  commits it with the other review records before the change runs. Never stash
+  or move a note. Resolve it after that change commits, not before.
 - **note:** acknowledge it. Resolve it only when the person says so.
 
 ## 4. Resolve

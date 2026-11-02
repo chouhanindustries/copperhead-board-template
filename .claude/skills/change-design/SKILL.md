@@ -84,8 +84,13 @@ The JSON's `outcome` is the result, not the model's narration. It also carries
   another approach. Do not retry the same request, and do not make the edit by
   hand instead.
 
-After a success, run `copperhead check` and report any finding the change
-introduced.
+After a success the run has already checked its own work: its ERC and DRC
+passed, and on an imported design its summary says how many findings were
+already there. Report that rather than rebuilding a before-and-after
+comparison by hand. Run `copperhead check` only to confirm the documents are in
+step. Never put a copy of a board or schematic in the repository, not even
+under an ignored folder such as `renders/`: the review reads every design file
+in the tree. Keep scratch work under `$TMPDIR`.
 
 ## When KiCad is the better tool
 
